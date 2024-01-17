@@ -16,6 +16,7 @@ import * as report from "./report.controller.js";
 const router = Router();
 
 router.get("/", report.getAllReport);
+router.get("/hrReport", report.getHrReport)
 router.post("/create", report.createReport);
 router.post("/update", report.updateReport);
 

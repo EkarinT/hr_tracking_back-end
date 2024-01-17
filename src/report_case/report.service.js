@@ -1,4 +1,5 @@
 import { pool } from "../connection.js";
+import { getHrReport } from "./report.controller.js";
 
 export default class ReportService {
   async createReport(data) {
@@ -11,13 +12,6 @@ export default class ReportService {
 
     try {
       const reportCaseId = await connection.query(reportCase, [data]);
-      // console.log("reportCaseId: ", reportCaseId[0].insertId);
-      // await cloudinary.uploader.upload(req.file.path),
-      //   (error, result) => {
-      //     if (error) {
-      //       return next(error);
-      //     }
-      //   };
       const casePayload = {
         case_id: reportCaseId[0].insertId,
         path
@@ -51,32 +45,10 @@ export default class ReportService {
     const [result] = await pool.query(sql);
     return result;
   }
+
+  async getHrReport(username) {
+    const sql = `SELECT * FROM report_case WHERE create_by = '${username}'`;
+    const result = await pool.query(sql);
+    return result;
+  }
 }
-
-// async createReport(data) {
-//   const { id } = data;
-//   let casePicture = `INSERT INTO report_case SET ?`;
-//   let reportCase = `INSERT INTO case_picture SET ? WHERE case_id = ${id}`;
-
-//   const connection = await pool.getConnection();
-//   await connection.query(`START TRANSACTION`);
-
-//   try {
-//     await connection.query(reportCase);
-//     console.log(reportCase);
-//     await connection.query(casePicture);
-
-//     await connection.commit();
-//     await connection.release();
-
-//     return { status: 1 };
-//   } catch (error) {
-//     await connection.rollback();
-//     await connection.release();
-
-//     return error;
-//   }
-//   // const sql = `INSERT INTO report_case SET ?`;
-//   // const [result] = await pool.query(sql, [data]);
-//   // return result;
-// }

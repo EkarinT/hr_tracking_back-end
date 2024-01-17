@@ -1,7 +1,6 @@
 import ReportService from "./report.service.js";
 
 export const createReport = async (req, res, next) => {
-
   try {
     const result = await new ReportService().createReport(req.body);
     // console.log(req.file);
@@ -67,6 +66,23 @@ export const getAllReport = async (req, res) => {
       code: 1,
       message: err.message,
       cause: "-",
+      result
+    });
+  }
+};
+
+export const getHrReport = async (req, res) => {
+  const { username } = req.body;
+  const result = await new ReportService().getHrReport();
+  try {
+    return res.status(200).send({
+      status: "hr report success",
+      result
+    });
+  } catch (err) {
+    res.status(500).send({
+      status: "fail",
+      message: err.message,
       result
     });
   }
