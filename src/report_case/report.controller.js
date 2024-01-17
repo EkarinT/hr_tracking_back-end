@@ -1,8 +1,7 @@
 import ReportService from "./report.service.js";
 
 export const createReport = async (req, res, next) => {
-  // console.log(req.files);
-  // console.log(req.body);
+
   try {
     const result = await new ReportService().createReport(req.body);
     // console.log(req.file);
