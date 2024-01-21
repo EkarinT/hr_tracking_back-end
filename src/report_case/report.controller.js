@@ -1,4 +1,5 @@
 import ReportService from "./report.service.js";
+import jwt from "jsonwebtoken";
 
 export const createReport = async (req, res, next) => {
   try {
@@ -72,9 +73,11 @@ export const getAllReport = async (req, res) => {
 };
 
 export const getHrReport = async (req, res) => {
-  const { username } = req.body;
-  const result = await new ReportService().getHrReport();
+  const token = req.headers.authorization;
+  const removeBearer = await token.split(" ");
+  const decode = jwt.verify(removeBearer[1], process.env.JWT_SECRET_KEY);
   try {
+    const result = await new ReportService().getHrReport(decode.role);
     return res.status(200).send({
       status: "hr report success",
       result
@@ -86,4 +89,28 @@ export const getHrReport = async (req, res) => {
       result
     });
   }
+};
+
+export const getDevReport = async (req, res) => {
+  const token = req.headers.authorization;
+  const removeTokenBearer = await token.split(" ");
+  const decode = jwt.verify(removeTokenBearer[1], process.env.JWT_SECRET_KEY);
+  try {
+    const result = await new ReportService().getDevReport(decode.role);
+    return res.status(200).send({
+      status: "hr report success",
+      result
+    });
+  } catch (err) {
+    res.status(500).send({
+      status: "fail",
+      message: err.message
+    });
+  }
+};
+
+export const createHrReport = async (req, res) => {
+  try {
+    const token = req.headers.authorization;
+  } catch (err) {}
 };

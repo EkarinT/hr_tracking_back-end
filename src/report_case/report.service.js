@@ -46,9 +46,17 @@ export default class ReportService {
     return result;
   }
 
-  async getHrReport(username) {
-    const sql = `SELECT * FROM report_case WHERE create_by = '${username}'`;
-    const result = await pool.query(sql);
+  async getHrReport(user_id) {
+    const sql = `SELECT * FROM report_case WHERE user_id = '${user_id}'`;
+    const [result] = await pool.query(sql);
+    console.log(result);
+    return result;
+  }
+
+  async getDevReport(user_id) {
+    const sql = `SELECT * FROM report_case WHERE user_id = '${user_id}'`;
+    const [result] = await pool.query(sql);
+    console.log(result);
     return result;
   }
 }

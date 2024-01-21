@@ -17,6 +17,8 @@ const router = Router();
 
 router.get("/", report.getAllReport);
 router.get("/hrReport", report.getHrReport)
+router.get("/devReport", report.getDevReport)
+router.get("/hrCreate", report.createHrReport)
 router.post("/create", report.createReport);
 router.post("/update", report.updateReport);
 
