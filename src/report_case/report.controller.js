@@ -98,7 +98,7 @@ export const getDevReport = async (req, res) => {
   try {
     const result = await new ReportService().getDevReport(decode.role);
     return res.status(200).send({
-      status: "hr report success",
+      status: "developer report success",
       result
     });
   } catch (err) {
@@ -109,8 +109,38 @@ export const getDevReport = async (req, res) => {
   }
 };
 
-export const createHrReport = async (req, res) => {
+export const getHr = async (req, res) => {
+  const getToken = req.headers.authorization;
+  const token = await getToken.split(" ")[1];
+  const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY);
   try {
-    const token = req.headers.authorization;
-  } catch (err) {}
+    const result = await new ReportService().getHr(decoded.role);
+    return res.status(200).send({
+      message: "you profile is here",
+      result
+    });
+  } catch (err) {
+    res.status(500).send({
+      status: "fail",
+      message: err.message
+    });
+  }
+};
+
+export const hrCreateReport = async (req, res) => {
+  const getToken = req.headers.authorization;
+  const token = await getToken.split(" ")[1];
+  const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY);
+  try {
+    const result = await new ReportService().hrCreateReport(req.body, decoded);
+    return res.status(200).send({
+      message: "create report success",
+      result
+    });
+  } catch (err) {
+    res.status(500).send({
+      status: "fail",
+      message: err.message
+    });
+  }
 };

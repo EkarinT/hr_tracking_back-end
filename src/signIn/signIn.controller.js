@@ -29,13 +29,13 @@ export const signIn = async (req, res, next) => {
   next();
 };
 
-export const getAdmin = async (req, res) => {
-  try {
-    const result = await new SignInService().getAdmin(req.body.id);
-    return res.status(200).json({ status: "you found me", result });
-  } catch (error) {
-    res
-      .status(500)
-      .json({ status: "try to find harder", message: error.message, result });
-  }
-};
+// export const getAdmin = async (req, res) => {
+//   try {
+//     const result = await new SignInService().getAdmin(req.body.id);
+//     return res.status(200).json({ status: "you found me", result });
+//   } catch (error) {
+//     res
+//       .status(500)
+//       .json({ status: "try to find harder", message: error.message, result });
+//   }
+// };
