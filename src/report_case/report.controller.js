@@ -128,11 +128,9 @@ export const getHr = async (req, res) => {
 };
 
 export const hrCreateReport = async (req, res) => {
-  const getToken = req.headers.authorization;
-  const token = await getToken.split(" ")[1];
-  const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY);
+  console.log(" tesssssssttttttt ", req.body);
   try {
-    const result = await new ReportService().hrCreateReport(req.body, decoded);
+    const result = await new ReportService().hrCreateReport(req.body);
     return res.status(200).send({
       message: "create report success",
       result

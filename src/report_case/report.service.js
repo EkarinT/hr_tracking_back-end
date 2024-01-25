@@ -58,16 +58,17 @@ export default class ReportService {
   }
 
   async getHr(role) {
-    let sql = `SELECT firstName, surName, roles.role FROM users INNER JOIN roles ON roles.role_id = '${role}'`;
+    let sql = `SELECT firstName, surName, user_id, roles.role FROM users INNER JOIN roles ON roles.role_id = '${role}'`;
     const [[result]] = await pool.query(sql);
     console.log(result);
     return result;
   }
 
-  async hrCreateReport(data, decoded) {
-    const { name, detail, cause, error_date, path } = data;
+  async hrCreateReport(data) {
+    const { name, detail, cause, error_date, firstName, surName, userId } =
+      data;
 
-    let reportCase = `INSERT INTO report_case SET name = "${name}", detail = "${detail}", cause = "${cause}", error_date = "${error_date}", create_by = "${decoded.firstName} ${decoded.surName}", user_id = "${decoded.user_id}"`;
+    let reportCase = `INSERT INTO report_case SET name = "${name}", detail = "${detail}", cause = "${cause}", error_date = "${error_date}", create_by = "${firstName} ${surName}", user_id = "${userId}"`;
 
     const connection = await pool.getConnection();
     await connection.query(`START TRANSACTION`);
