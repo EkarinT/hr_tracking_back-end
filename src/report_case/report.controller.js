@@ -128,8 +128,8 @@ export const getHr = async (req, res) => {
 };
 
 export const hrCreateReport = async (req, res) => {
-  console.log(" tesssssssttttttt ", req.body);
   try {
+    console.log(req.body);
     const result = await new ReportService().hrCreateReport(req.body);
     return res.status(200).send({
       message: "create report success",
@@ -139,6 +139,35 @@ export const hrCreateReport = async (req, res) => {
     res.status(500).send({
       status: "fail",
       message: err.message
+    });
+  }
+};
+
+export const hrUpdateReport = async (req, res) => {
+  console.log(req.body);
+  const payload = {
+    id: req.body.id,
+    name: req.body.name,
+    cause: req.body.cause,
+    detail: req.body.detail,
+    status: req.body.status
+  };
+  try {
+    const result = await new ReportService().hrUpdateReport(payload);
+    return res.status(200).send({
+      status: "success",
+      code: 1,
+      message: "update report success",
+      cause: "-",
+      result
+    });
+  } catch (err) {
+    res.status(500).send({
+      status: "fail",
+      code: 1,
+      message: err.message,
+      cause: "-",
+      result
     });
   }
 };

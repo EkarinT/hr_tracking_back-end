@@ -16,10 +16,11 @@ import * as report from "./report.controller.js";
 const router = Router();
 
 router.get("/", report.getAllReport);
-router.get("/getHr", report.getHr)
-router.get("/hrReport", report.getHrReport)
-router.get("/devReport", report.getDevReport)
-router.post("/hrCreate", report.hrCreateReport)
+router.get("/getHr", report.getHr);
+router.get("/hrReport", report.getHrReport);
+router.get("/devReport", report.getDevReport);
+router.post("/hrCreate", report.hrCreateReport);
+router.post("/hrUpdate", report.hrUpdateReport);
 router.post("/create", report.createReport);
 router.post("/update", report.updateReport);
 

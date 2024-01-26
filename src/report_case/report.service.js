@@ -60,7 +60,6 @@ export default class ReportService {
   async getHr(role) {
     let sql = `SELECT firstName, surName, user_id, roles.role FROM users INNER JOIN roles ON roles.role_id = '${role}'`;
     const [[result]] = await pool.query(sql);
-    console.log(result);
     return result;
   }
 
@@ -76,8 +75,8 @@ export default class ReportService {
     try {
       const reportCaseId = await connection.query(reportCase, [data]);
       const casePayload = {
-        case_id: reportCaseId[0].insertId,
-        path
+        case_id: reportCaseId[0].insertId
+        // path
       };
 
       let casePicture = `INSERT INTO case_picture SET ? `;
@@ -95,5 +94,12 @@ export default class ReportService {
 
       return error;
     }
+  }
+
+  async hrUpdateReport(data) {
+    const { id } = data;
+    const sql = `UPDATE report_case SET ? WHERE id = '${id}' LIMIT 1`;
+    const [result] = await pool.query(sql, [data]);
+    return result;
   }
 }
