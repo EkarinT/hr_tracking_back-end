@@ -63,6 +63,12 @@ export default class ReportService {
     return result;
   }
 
+  async getDev(role) {
+    let sql = `SELECT firstName, surName, user_id, roles.role FROM users INNER JOIN roles ON roles.role_id = '${role}'`;
+    const [[result]] = await pool.query(sql);
+    return result;
+  }
+
   async hrCreateReport(data) {
     const { name, detail, cause, error_date, firstName, surName, userId } =
       data;
@@ -101,5 +107,22 @@ export default class ReportService {
     const sql = `UPDATE report_case SET ? WHERE id = '${id}' LIMIT 1`;
     const [result] = await pool.query(sql, [data]);
     return result;
+  }
+
+  async devUpdate(data) {
+    const { id } = data;
+    const sql = `UPDATE report_case SET ? WHERE id = '${id}' LIMIT 1`;
+    const [result] = await pool.query(sql, [data]);
+    return result;
+  }
+
+  async changeToProcess(id) {
+    const sql = `UPDATE report_case SET status = 2 WHERE id = '${id}' LIMIT 1`;
+    const [result] = await pool.query(sql);
+    return result;
+  }
+
+  async changeToDevFixed(id) {
+    const sql = `UPDATE report_case SET status = 3 WHERE id = '${id}' LIMIT 1`;
   }
 }

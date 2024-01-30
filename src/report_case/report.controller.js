@@ -109,6 +109,35 @@ export const getDevReport = async (req, res) => {
   }
 };
 
+export const devUpdate = async (req, res) => {
+  console.log(req.body);
+  const payload = {
+    id: req.body.id,
+    name: req.body.name,
+    cause: req.body.cause,
+    detail: req.body.detail,
+    status: req.body.status
+  };
+  try {
+    const result = await new ReportService().devUpdate(payload);
+    return res.status(200).send({
+      status: "success",
+      code: 1,
+      message: "update report success",
+      cause: "-",
+      result
+    });
+  } catch (err) {
+    res.status(500).send({
+      status: "fail",
+      code: 1,
+      message: err.message,
+      cause: "-",
+      result
+    });
+  }
+};
+
 export const getHr = async (req, res) => {
   const getToken = req.headers.authorization;
   const token = await getToken.split(" ")[1];
@@ -127,6 +156,67 @@ export const getHr = async (req, res) => {
   }
 };
 
+export const getDev = async (req, res) => {
+  const getToken = req.headers.authorization;
+  const token = await getToken.split(" ")[1];
+  const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY);
+  try {
+    const result = await new ReportService().getDev(decoded.role);
+    return res.status(200).send({
+      message: "you profile is here",
+      result
+    });
+  } catch (err) {
+    res.status(500).send({
+      status: "fail",
+      message: err.message
+    });
+  }
+};
+
+export const changeToProcess = async (req, res) => {
+  const id = req.body.id;
+  try {
+    const result = await new ReportService().changeToProcess(id);
+    return res.status(200).send({
+      status: "success",
+      code: 1,
+      message: "update report success",
+      cause: "-",
+      result
+    });
+  } catch (err) {
+    res.status(500).send({
+      status: "fail",
+      code: 1,
+      message: err.message,
+      cause: "-",
+      result
+    });
+  }
+};
+
+export const changeToDevFixed = async (req, res) => {
+  const id = req.body.id;
+  try {
+    const result = await new ReportService().changeToDevFixed(id);
+    return res.status(200).send({
+      status: "success",
+      code: 1,
+      message: "update report success",
+      cause: "-",
+      result
+    });
+  } catch (err) {
+    res.status(500).send({
+      status: "fail",
+      code: 1,
+      message: err.message,
+      cause: "-",
+      result
+    });
+  }
+}
 export const hrCreateReport = async (req, res) => {
   try {
     console.log(req.body);
