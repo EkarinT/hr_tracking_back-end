@@ -77,7 +77,10 @@ export const getHrReport = async (req, res) => {
   const removeBearer = await token.split(" ");
   const decode = jwt.verify(removeBearer[1], process.env.JWT_SECRET_KEY);
   try {
-    const result = await new ReportService().getHrReport(decode.role);
+    const result = await new ReportService().getHrReport(
+      decode.firstName,
+      decode.surName
+    );
     return res.status(200).send({
       status: "hr report success",
       result
@@ -216,7 +219,7 @@ export const changeToDevFixed = async (req, res) => {
       result
     });
   }
-}
+};
 export const hrCreateReport = async (req, res) => {
   try {
     console.log(req.body);
@@ -244,6 +247,28 @@ export const hrUpdateReport = async (req, res) => {
   };
   try {
     const result = await new ReportService().hrUpdateReport(payload);
+    return res.status(200).send({
+      status: "success",
+      code: 1,
+      message: "update report success",
+      cause: "-",
+      result
+    });
+  } catch (err) {
+    res.status(500).send({
+      status: "fail",
+      code: 1,
+      message: err.message,
+      cause: "-",
+      result
+    });
+  }
+};
+
+export const changeToApprove = async (req, res) => {
+  const id = req.body.id;
+  try {
+    const result = await new ReportService().changeToApprove(id);
     return res.status(200).send({
       status: "success",
       code: 1,

@@ -24,6 +24,7 @@ router.post("/changeStatusToProcess", report.changeToProcess)
 router.post("/changeStatusToDevFixed", report.changeToDevFixed)
 router.post("/devUpdate", report.devUpdate)
 router.post("/hrCreate", report.hrCreateReport);
+router.post("/changeToApprove", report.changeToApprove);
 router.post("/hrUpdate", report.hrUpdateReport);
 router.post("/create", report.createReport);
 router.post("/update", report.updateReport);

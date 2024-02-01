@@ -45,8 +45,8 @@ export default class ReportService {
     return result;
   }
 
-  async getHrReport(user_id) {
-    const sql = `SELECT * FROM report_case WHERE user_id = '${user_id}'`;
+  async getHrReport(firstName, surName) {
+    const sql = `SELECT * FROM report_case WHERE create_by = '${firstName} ${surName}'`;
     const [result] = await pool.query(sql);
     return result;
   }
@@ -70,10 +70,18 @@ export default class ReportService {
   }
 
   async hrCreateReport(data) {
-    const { name, detail, cause, error_date, firstName, surName, userId } =
-      data;
+    const {
+      name,
+      detail,
+      cause,
+      error_date,
+      error_time,
+      firstName,
+      surName,
+      userId
+    } = data;
 
-    let reportCase = `INSERT INTO report_case SET name = "${name}", detail = "${detail}", cause = "${cause}", error_date = "${error_date}", create_by = "${firstName} ${surName}", user_id = "${userId}"`;
+    let reportCase = `INSERT INTO report_case SET name = "${name}", detail = "${detail}", cause = "${cause}", error_date = "${error_date} ${error_time}", create_by = "${firstName} ${surName}", user_id = "${userId}"`;
 
     const connection = await pool.getConnection();
     await connection.query(`START TRANSACTION`);
@@ -124,5 +132,13 @@ export default class ReportService {
 
   async changeToDevFixed(id) {
     const sql = `UPDATE report_case SET status = 3 WHERE id = '${id}' LIMIT 1`;
+    const [result] = await pool.query(sql);
+    return result;
+  }
+
+  async changeToApprove(id) {
+    const sql = `UPDATE report_case SET status = 4 WHERE id = '${id}' LIMIT 1`;
+    const [result] = await pool.query(sql);
+    return result;
   }
 }
