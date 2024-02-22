@@ -148,7 +148,7 @@ export const getHr = async (req, res) => {
   try {
     const result = await new ReportService().getHr(decoded.role);
     return res.status(200).send({
-      message: "you profile is here",
+      message: "your HR profile is here",
       result
     });
   } catch (err) {
@@ -163,10 +163,11 @@ export const getDev = async (req, res) => {
   const getToken = req.headers.authorization;
   const token = await getToken.split(" ")[1];
   const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY);
+  const roleTest = 2
   try {
-    const result = await new ReportService().getDev(decoded.role);
+    const result = await new ReportService().getDev(decoded.role,roleTest);
     return res.status(200).send({
-      message: "you profile is here",
+      message: "your Dev profile is here",
       result
     });
   } catch (err) {

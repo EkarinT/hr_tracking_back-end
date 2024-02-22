@@ -58,13 +58,13 @@ export default class ReportService {
   }
 
   async getHr(role) {
-    let sql = `SELECT firstName, surName, user_id, roles.role FROM users INNER JOIN roles ON roles.role_id = '${role}'`;
+    let sql = `SELECT firstName, surName, user_id, roles.role FROM users INNER JOIN roles ON roles.role_id = '${role}' AND users.role = ${role}`;
     const [[result]] = await pool.query(sql);
     return result;
   }
 
-  async getDev(role) {
-    let sql = `SELECT firstName, surName, user_id, roles.role FROM users INNER JOIN roles ON roles.role_id = '${role}'`;
+  async getDev(roleId) {
+    let sql = `SELECT firstName, surName, user_id, roles.role FROM users INNER JOIN roles ON roles.role_id = '${roleId}' AND users.role = '${roleId}'`;
     const [[result]] = await pool.query(sql);
     return result;
   }

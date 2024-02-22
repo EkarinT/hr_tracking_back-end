@@ -17,12 +17,12 @@ const router = Router();
 
 router.get("/", report.getAllReport);
 router.get("/getHr", report.getHr);
-router.get("/getDev",report.getDev)
+router.get("/getDev", report.getDev);
 router.get("/hrReport", report.getHrReport);
 router.get("/devReport", report.getDevReport);
-router.post("/changeStatusToProcess", report.changeToProcess)
-router.post("/changeStatusToDevFixed", report.changeToDevFixed)
-router.post("/devUpdate", report.devUpdate)
+router.post("/changeStatusToProcess", report.changeToProcess);
+router.post("/changeStatusToDevFixed", report.changeToDevFixed);
+router.post("/devUpdate", report.devUpdate);
 router.post("/hrCreate", report.hrCreateReport);
 router.post("/changeToApprove", report.changeToApprove);
 router.post("/hrUpdate", report.hrUpdateReport);
